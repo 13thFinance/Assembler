@@ -1,0 +1,19 @@
+If, then, else
+Well, this one is a basic one, and in fact we already used this structure in the previous chapter. Consider the following structure, where E is an expression and S1 and S2 are statements (they may be compound statements like { SA; SB; SC; })
+
+if (E) then
+   S1
+else
+   S2
+A possible way to express this in ARM assembler could be the following
+
+if_eval: 
+    /* Assembler that evaluates E and updates the cpsr accordingly */
+bXX else /* Here XX is the appropiate condition */
+then_part: 
+   /* assembler for S1, the "then" part */
+   b end_of_if
+else:
+   /* assembler for S2, the "else" part */
+end_of_if:
+If there is no else part, we can replace bXX else with bXX end_of_if.

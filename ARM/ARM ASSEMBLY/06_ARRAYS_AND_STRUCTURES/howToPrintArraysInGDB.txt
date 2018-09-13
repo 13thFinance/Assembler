@@ -1,0 +1,4 @@
+gdb "program name"
+start //starts the program running
+
+p (int["NUMBER_OF_ELEMENTS_YOU_WANT_PRINTED"])NAME_OF_ARRAY

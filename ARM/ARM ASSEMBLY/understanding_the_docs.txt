@@ -1,0 +1,13 @@
+when readin the ARM DOCS
+you might see an instruction being referred to as
+
+intruction Rdest, Rsource1, source2
+
+or in the case of move(mov):
+
+mov Rdest, source2
+
+In these circumstances Rdest and Rsource1 are Registers(ie. r1-r16)
+
+source2 can be a register OR and immediate value(ie. #3 or #4)
+source2 can also be other things.

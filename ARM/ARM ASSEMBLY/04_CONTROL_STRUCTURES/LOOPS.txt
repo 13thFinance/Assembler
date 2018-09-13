@@ -1,0 +1,23 @@
+This is another usual one in structured programming. While there are several types of loops, actually all reduce to the following structure.
+
+while (E)
+  S
+Supposedly S makes something so E eventually becomes false and the loop is left. Otherwise we would stay in the loop forever (sometimes this is what you want but not in our examples). A way to implement these loops is as follows.
+
+while_condition : /* assembler to evaluate E and update cpsr */
+  bXX end_of_loop  /* If E is false, then leave the loop right now */
+  /* assembler of S */
+  b while_condition /* Unconditional branch to the beginning */
+end_of_loop:
+A common loop involves iterating from a single range of integers, like in
+
+for (i = L; i < N; i += K)
+  S
+But this is nothing but
+
+  i = L;
+  while (i < N)
+  {
+     S;
+     i += K;
+  }

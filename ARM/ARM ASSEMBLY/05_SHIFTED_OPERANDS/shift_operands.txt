@@ -1,0 +1,53 @@
+LSL #n
+Logical Shift Left. Shifts bits n times left. The n leftmost bits are lost and the n rightmost are set to zero.
+
+LSL Rsource3
+Like the previous one but instead of an immediate the lower byte of a register specifies the amount of shifting.
+
+LSR #n
+Logical Shift Right. Shifts bits n times right. The n rightmost bits are lost and the n leftmost bits are set to zero,
+
+LSR Rsource3
+Like the previous one but instead of an immediate the lower byte of a register specifies the amount of shifting.
+
+ASR #n
+Arithmetic Shift Right. Like LSR but the leftmost bit before shifting is used instead of zero in the n leftmost ones.
+
+ASR Rsource3
+Like the previous one but using a the lower byte of a register instead of an immediate.
+
+ROR #n
+Rotate Right. Like LSR but the n rightmost bits are not lost but pushed onto the n leftmost bits
+
+ROR Rsource3
+Like the previous one but using a the lower byte of a register instead of an immediate.
+
+
+You may be wondering why one would want to shift left or right the value of a register. 
+If you recall chapter 6 we saw that shifting left (LSL) 
+a value gives a value that the same as multiplying it by 2. 
+Conversely, shifting it right (ASR if we use two’s complement, LSR otherwise) 
+is the same as dividing by 2. Since a shift of n is the same as doing n shifts of 1, 
+shifts actually multiply or divide a value by 2n.
+
+mov r1, r2, LSL #1      /* r1 ← (r2*2) */
+mov r1, r2, LSL #2      /* r1 ← (r2*4) */
+mov r1, r3, ASR #3      /* r1 ← (r3/8) */
+mov r3, #4
+mov r1, r2, LSL r3      /* r1 ← (r2*16) */
+
+
+We can combine it with add to get some useful cases.
+
+add r1, r2, r2, LSL #1   /* r1 ← r2 + (r2*2) equivalent to r1 ← r2*3 */
+add r1, r2, r2, LSL #2   /* r1 ← r2 + (r2*4) equivalent to r1 ← r2*5 */
+
+ou can do something similar with sub.
+
+sub r1, r2, r2, LSL #3  /* r1 ← r2 - (r2*8) equivalent to r1 ← r2*(-7)
+
+Rotations are less useful than shifts in everyday use. They are usually used in cryptography, to reorder bits and “scramble” them. ARM does not provide a way to rotate left but we can do a n rotate left doing a 32-n rotate right.
+
+/* Assume r1 is 0x12345678 */
+mov r1, r1, ROR #1   /* r1 ← r1 ror 1. This is r1 ← 0x91a2b3c */
+mov r1, r1, ROR #31  /* r1 ← r1 ror 31. This is r1 ← 0x12345678 */
